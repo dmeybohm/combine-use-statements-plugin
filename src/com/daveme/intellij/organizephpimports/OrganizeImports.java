@@ -81,7 +81,7 @@ public class OrganizeImports extends AnAction {
                             if (totalUses > 0) {
                                 useStatements.append(",\n\t");
                             }
-                            useStatements.append("\\").append(use.getName());
+                            useStatements.append(use.getFQN());
                             totalUses++;
                         }
                     }
