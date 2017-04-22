@@ -62,7 +62,6 @@ public class OrganizeImports extends AnAction {
                     // get the newline character after this use statement if there is one:
                     PsiElement subsequentElement = useList.getNextSibling();
                     modifyOffset = removeElement(modifyOffset, textRange, editor);
-                    System.out.println("subsequentElement class: "+subsequentElement.getClass().getName());
                     if (subsequentElement instanceof PsiWhiteSpace) {
                         modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
                     }
