@@ -86,7 +86,7 @@ public class OrganizeImports extends AnAction {
                         }
                     }
                     useStatements.append(";\n\n");
-                    editor.getDocument().insertString(startingOffset, useStatements.toString());
+                    editor.getDocument().insertString(startingOffset, useStatements);
                 }
 
             }
