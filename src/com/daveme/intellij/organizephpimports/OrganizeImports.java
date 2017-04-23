@@ -15,8 +15,6 @@ import com.jetbrains.php.lang.psi.elements.PhpUse;
 import com.jetbrains.php.lang.psi.elements.PhpUseList;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Iterator;
 import java.util.List;
 
 public class OrganizeImports extends AnAction {
@@ -76,7 +74,14 @@ public class OrganizeImports extends AnAction {
             PsiElement subsequentElement = useList.getNextSibling();
             modifyOffset = removeElement(modifyOffset, textRange, editor);
             if (subsequentElement instanceof PsiWhiteSpace) {
-                modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
+                PsiElement nextElement = subsequentElement.getNextSibling();
+                if (nextElement instanceof PhpUseList) {
+                    modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
+                } else {
+                    TextRange oldRange = subsequentElement.getTextRange();
+                    TextRange newRange = new TextRange(oldRange.getStartOffset(), oldRange.getStartOffset() + 1);
+                    modifyOffset = removeElement(modifyOffset, newRange, editor);
+                }
             }
         }
         return startingOffset;
@@ -99,7 +104,7 @@ public class OrganizeImports extends AnAction {
                 totalUses++;
             }
         }
-        useStatements.append(";\n\n");
+        useStatements.append(";\n");
         return useStatements;
     }
 
