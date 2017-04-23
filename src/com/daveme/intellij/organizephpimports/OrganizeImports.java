@@ -13,6 +13,8 @@ import com.jetbrains.php.lang.psi.PhpFile;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.elements.PhpUse;
 import com.jetbrains.php.lang.psi.elements.PhpUseList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
@@ -49,48 +51,56 @@ public class OrganizeImports extends AnAction {
                     return;
                 }
                 List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
-                Iterator iterator = imports.iterator();
-
-                int modifyOffset = 0;
-                Integer startingOffset = null;
-                while (iterator.hasNext()) {
-                    PhpUseList useList = (PhpUseList)iterator.next();
-                    TextRange textRange = useList.getTextRange();
-                    if (startingOffset == null) {
-                        startingOffset = textRange.getStartOffset();
-                    }
-                    // get the newline character after this use statement if there is one:
-                    PsiElement subsequentElement = useList.getNextSibling();
-                    modifyOffset = removeElement(modifyOffset, textRange, editor);
-                    if (subsequentElement instanceof PsiWhiteSpace) {
-                        modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
-                    }
-                }
+                Integer startingOffset = removeUseStatements(imports, editor);
 
                 if (startingOffset != null) {
-                    // replace the use statements:
-                    Iterator secondIterator = imports.iterator();
-                    StringBuilder useStatements = new StringBuilder();
-                    useStatements.append("use ");
-                    int totalUses = 0;
-                    while (secondIterator.hasNext()) {
-                        PhpUseList useList = (PhpUseList)secondIterator.next();
-                        PhpUse[] declarations = useList.getDeclarations();
-
-                        for (PhpUse use : declarations) {
-                            if (totalUses > 0) {
-                                useStatements.append(",\n\t");
-                            }
-                            useStatements.append(use.getFQN());
-                            totalUses++;
-                        }
-                    }
-                    useStatements.append(";\n\n");
+                    StringBuilder useStatements = generateUseStatements(imports);
                     editor.getDocument().insertString(startingOffset, useStatements);
                 }
 
             }
         }.execute();
+    }
+
+    @Nullable
+    private Integer removeUseStatements(List imports, Editor editor) {
+        int modifyOffset = 0;
+        Integer startingOffset = null;
+        for (Object useListObject : imports) {
+            PhpUseList useList = (PhpUseList)useListObject;
+            TextRange textRange = useList.getTextRange();
+            if (startingOffset == null) {
+                startingOffset = textRange.getStartOffset();
+            }
+            // get the newline character after this use statement if there is one:
+            PsiElement subsequentElement = useList.getNextSibling();
+            modifyOffset = removeElement(modifyOffset, textRange, editor);
+            if (subsequentElement instanceof PsiWhiteSpace) {
+                modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
+            }
+        }
+        return startingOffset;
+    }
+
+    @NotNull
+    private StringBuilder generateUseStatements(List imports) {
+        // replace the use statements:
+        StringBuilder useStatements = new StringBuilder();
+        useStatements.append("use ");
+        int totalUses = 0;
+        for (Object useListObject : imports) {
+            PhpUseList useList = (PhpUseList)useListObject;
+
+            for (PhpUse use : useList.getDeclarations()) {
+                if (totalUses > 0) {
+                    useStatements.append(",\n\t");
+                }
+                useStatements.append(use.getFQN());
+                totalUses++;
+            }
+        }
+        useStatements.append(";\n\n");
+        return useStatements;
     }
 
     private int removeElement(int modifyOffset, TextRange textRange, Editor editor) {
