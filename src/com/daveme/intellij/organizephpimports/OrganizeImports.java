@@ -148,6 +148,11 @@ public class OrganizeImports extends AnAction {
                     }
                 }
                 useStatements.append(use.getFQN());
+                String aliasName = use.getAliasName();
+                if (aliasName != null) {
+                    useStatements.append(" as ");
+                    useStatements.append(aliasName);
+                }
                 totalUses++;
             }
         }
