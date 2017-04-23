@@ -4,16 +4,18 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.jetbrains.php.codeInsight.PhpCodeInsightUtil;
 import com.jetbrains.php.lang.psi.PhpFile;
+import com.jetbrains.php.lang.psi.elements.PhpNamespace;
 import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
 import com.jetbrains.php.lang.psi.elements.PhpUse;
 import com.jetbrains.php.lang.psi.elements.PhpUseList;
+import com.jetbrains.php.lang.psi.elements.impl.PhpNamespaceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import java.util.List;
@@ -51,9 +53,14 @@ public class OrganizeImports extends AnAction {
                 }
                 List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
                 Integer startingOffset = removeUseStatements(imports, editor);
-
+                PsiElement namespaceParent = PsiTreeUtil.findFirstParent(element, PhpNamespace.INSTANCEOF);
+                boolean indentExtraLevel = false;
+                if (namespaceParent != null) {
+                    PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
+                    indentExtraLevel = parent.isBraced();
+                }
                 if (startingOffset != null) {
-                    StringBuilder useStatements = generateUseStatements(imports);
+                    StringBuilder useStatements = generateUseStatements(imports, indentExtraLevel);
                     editor.getDocument().insertString(startingOffset, useStatements);
                 }
 
@@ -73,11 +80,11 @@ public class OrganizeImports extends AnAction {
             }
             // get the newline character after this use statement if there is one:
             PsiElement subsequentElement = useList.getNextSibling();
-            modifyOffset = removeElement(modifyOffset, textRange, editor);
+            modifyOffset = removeRange(modifyOffset, textRange, editor);
             if (subsequentElement instanceof PsiWhiteSpace) {
                 PsiElement nextElement = subsequentElement.getNextSibling();
                 if (nextElement instanceof PhpUseList) {
-                    modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
+                    modifyOffset = removeRange(modifyOffset, subsequentElement.getTextRange(), editor);
                 } else {
                     modifyOffset = removeUpToNextNewLine(modifyOffset, subsequentElement.getTextRange(), editor);
                 }
@@ -87,7 +94,7 @@ public class OrganizeImports extends AnAction {
     }
 
     @NotNull
-    private StringBuilder generateUseStatements(List imports) {
+    private StringBuilder generateUseStatements(List imports, boolean indentExtraLevel) {
         // replace the use statements:
         StringBuilder useStatements = new StringBuilder();
         useStatements.append("use ");
@@ -98,16 +105,22 @@ public class OrganizeImports extends AnAction {
             for (PhpUse use : useList.getDeclarations()) {
                 if (totalUses > 0) {
                     useStatements.append(",\n\t");
+                    if (indentExtraLevel) {
+                        useStatements.append("\t");
+                    }
                 }
                 useStatements.append(use.getFQN());
                 totalUses++;
             }
         }
-        useStatements.append(";\n");
+        useStatements.append(";");
+        if (indentExtraLevel) {
+            useStatements.append("\n");
+        }
         return useStatements;
     }
 
-    private int removeElement(int modifyOffset, TextRange textRange, Editor editor) {
+    private int removeRange(int modifyOffset, TextRange textRange, Editor editor) {
         editor.getDocument().deleteString(textRange.getStartOffset() - modifyOffset,
                     textRange.getEndOffset() - modifyOffset);
         return modifyOffset + textRange.getEndOffset() - textRange.getStartOffset();
@@ -126,7 +139,7 @@ public class OrganizeImports extends AnAction {
             }
         }
         TextRange newRange = new TextRange(textRange.getStartOffset(), textRange.getStartOffset() + textLength);
-        return removeElement(modifyOffset, newRange, editor);
+        return removeRange(modifyOffset, newRange, editor);
     }
 
 }
