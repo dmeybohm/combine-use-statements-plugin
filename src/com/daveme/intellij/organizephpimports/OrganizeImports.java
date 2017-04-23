@@ -113,10 +113,7 @@ public class OrganizeImports extends AnAction {
                 totalUses++;
             }
         }
-        useStatements.append(";");
-        if (indentExtraLevel) {
-            useStatements.append("\n");
-        }
+        useStatements.append(";\n");
         return useStatements;
     }
 
