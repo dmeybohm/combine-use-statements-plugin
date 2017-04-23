@@ -18,6 +18,8 @@ import com.jetbrains.php.lang.psi.elements.PhpUseList;
 import com.jetbrains.php.lang.psi.elements.impl.PhpNamespaceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizeImports extends AnAction {
@@ -60,12 +62,34 @@ public class OrganizeImports extends AnAction {
                     indentExtraLevel = parent.isBraced();
                 }
                 if (startingOffset != null) {
-                    StringBuilder useStatements = generateUseStatements(imports, indentExtraLevel);
+                    List<PhpUseList> classList = splitUseStatements(imports, true, false, false);
+                    List<PhpUseList> constList = splitUseStatements(imports, false, true, false);
+                    List<PhpUseList> functionList = splitUseStatements(imports, false, false, true);
+
+                    StringBuilder useStatements = new StringBuilder();
+                    boolean generated;
+                    generated = generateUseStatements(classList, useStatements, null, indentExtraLevel, false);
+                    generated = generateUseStatements(constList, useStatements, "const", indentExtraLevel, generated);
+                    generateUseStatements(functionList, useStatements, "function", indentExtraLevel, generated);
                     editor.getDocument().insertString(startingOffset, useStatements);
                 }
-
             }
         }.execute();
+    }
+
+    private List<PhpUseList> splitUseStatements(List imports, boolean extractClasses, boolean extractConst, boolean extractFunctions) {
+        ArrayList<PhpUseList> result = new ArrayList<PhpUseList>();
+        for (Object useListObject : imports) {
+            PhpUseList useList = (PhpUseList) useListObject;
+            if (extractConst && useList.isOfConst()) {
+                result.add(useList);
+            } else if (extractFunctions && useList.isOfFunction()) {
+                result.add(useList);
+            } else if (extractClasses && (!useList.isOfFunction() && !useList.isOfConst())) {
+                result.add(useList);
+            }
+        }
+        return result;
     }
 
     @Nullable
@@ -93,11 +117,25 @@ public class OrganizeImports extends AnAction {
         return startingOffset;
     }
 
-    @NotNull
-    private StringBuilder generateUseStatements(List imports, boolean indentExtraLevel) {
-        // replace the use statements:
-        StringBuilder useStatements = new StringBuilder();
+    private boolean generateUseStatements(
+            List imports,
+            StringBuilder useStatements,
+            String extra,
+            boolean indentExtraLevel,
+            boolean generated
+    ) {
+        if (imports.size() == 0) {
+            return false;
+        }
+        if (generated && indentExtraLevel) {
+            useStatements.append("\t");
+        }
         useStatements.append("use ");
+        if (extra != null) {
+            useStatements.append(extra);
+            useStatements.append(" ");
+        }
+
         int totalUses = 0;
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList)useListObject;
@@ -114,7 +152,7 @@ public class OrganizeImports extends AnAction {
             }
         }
         useStatements.append(";\n");
-        return useStatements;
+        return true;
     }
 
     private int removeRange(int modifyOffset, TextRange textRange, Editor editor) {
