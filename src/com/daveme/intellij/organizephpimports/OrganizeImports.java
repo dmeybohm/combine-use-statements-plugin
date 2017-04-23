@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
@@ -78,9 +79,7 @@ public class OrganizeImports extends AnAction {
                 if (nextElement instanceof PhpUseList) {
                     modifyOffset = removeElement(modifyOffset, subsequentElement.getTextRange(), editor);
                 } else {
-                    TextRange oldRange = subsequentElement.getTextRange();
-                    TextRange newRange = new TextRange(oldRange.getStartOffset(), oldRange.getStartOffset() + 1);
-                    modifyOffset = removeElement(modifyOffset, newRange, editor);
+                    modifyOffset = removeUpToNextNewLine(modifyOffset, subsequentElement.getTextRange(), editor);
                 }
             }
         }
@@ -112,6 +111,22 @@ public class OrganizeImports extends AnAction {
         editor.getDocument().deleteString(textRange.getStartOffset() - modifyOffset,
                     textRange.getEndOffset() - modifyOffset);
         return modifyOffset + textRange.getEndOffset() - textRange.getStartOffset();
+    }
+
+    private int removeUpToNextNewLine(int modifyOffset, TextRange textRange, Editor editor) {
+        TextRange modifiedRange = new TextRange(textRange.getStartOffset() - modifyOffset,
+                textRange.getEndOffset() - modifyOffset);
+        String text = editor.getDocument().getText(modifiedRange);
+        char[] chars = text.toCharArray();
+        int textLength = 0;
+        for (char aChar : chars) {
+            textLength += 1;
+            if (aChar == '\n') {
+                break;
+            }
+        }
+        TextRange newRange = new TextRange(textRange.getStartOffset(), textRange.getStartOffset() + textLength);
+        return removeElement(modifyOffset, newRange, editor);
     }
 
 }
