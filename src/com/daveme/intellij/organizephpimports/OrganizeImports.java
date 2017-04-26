@@ -147,7 +147,7 @@ public class OrganizeImports extends AnAction {
             if (declarations == null) {
                 continue;
             }
-            for (PhpUse use : useList.getDeclarations()) {
+            for (PhpUse use : declarations) {
                 if (totalUses > 0) {
                     useStatements.append(",\n\t");
                     if (indentExtraLevel) {
