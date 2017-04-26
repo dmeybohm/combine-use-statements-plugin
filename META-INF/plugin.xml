@@ -35,8 +35,12 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="TestAction.TestAction2" class="com.daveme.intellij.organizephpimports.OrganizeImports" text="Organize Imports..." description="Organize Imports">
-            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        <action id="OrganizePHPImports.OrganizeImports"
+                class="com.daveme.intellij.organizephpimports.OrganizeImports"
+                text="Organize Imports..."
+                description="Organize Imports">
+            <add-to-group group-id="CodeFormatGroup" anchor="after" relative-to-action="OptimizeImports"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta alt G"/>
         </action>
     </actions>
 

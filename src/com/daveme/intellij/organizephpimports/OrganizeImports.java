@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -37,19 +38,22 @@ public class OrganizeImports extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         Object psiFile = e.getData(CommonDataKeys.PSI_FILE);
         final PhpFile file = (PhpFile)psiFile;
-        final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        final Editor editor = e.getData(CommonDataKeys.EDITOR_EVEN_IF_INACTIVE);
         if (editor == null || psiFile == null) {
+            VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+            // todo handle this case
             return;
         }
         new WriteCommandAction.Simple(file.getProject(), file) {
             @Override
             protected void run() throws Throwable {
-                int offset = editor.getCaretModel().getOffset();
+                int offset = 0;
                 PsiElement element = file.findElementAt(offset);
                 if (element == null) {
                     return;
                 }
                 PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(element);
+                System.out.println("scopeForUseOperator: "+scopeForUseOperator);
                 if (scopeForUseOperator == null) {
                     return;
                 }
