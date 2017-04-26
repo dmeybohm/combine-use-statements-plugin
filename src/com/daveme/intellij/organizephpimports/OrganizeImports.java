@@ -25,7 +25,7 @@ import java.util.List;
 public class OrganizeImports extends AnAction {
 
     @Override
-    public void update(AnActionEvent e) {
+    public void update(@NotNull AnActionEvent e) {
         super.update(e);
         Object psiFile = e.getData(CommonDataKeys.PSI_FILE);
         boolean enabled = psiFile instanceof PhpFile;
@@ -34,7 +34,7 @@ public class OrganizeImports extends AnAction {
     }
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
+    public void actionPerformed(@NotNull AnActionEvent e) {
         Object psiFile = e.getData(CommonDataKeys.PSI_FILE);
         final PhpFile file = (PhpFile)psiFile;
         final Editor editor = e.getData(CommonDataKeys.EDITOR);
@@ -118,11 +118,11 @@ public class OrganizeImports extends AnAction {
     }
 
     private boolean generateUseStatements(
-            List imports,
-            StringBuilder useStatements,
-            String extra,
-            boolean indentExtraLevel,
-            boolean generated
+        List imports,
+        StringBuilder useStatements,
+        String extra,
+        boolean indentExtraLevel,
+        boolean generated
     ) {
         if (imports.size() == 0) {
             return false;
@@ -139,7 +139,10 @@ public class OrganizeImports extends AnAction {
         int totalUses = 0;
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList)useListObject;
-
+            PhpUse[] declarations = useList.getDeclarations();
+            if (declarations == null) {
+                continue;
+            }
             for (PhpUse use : useList.getDeclarations()) {
                 if (totalUses > 0) {
                     useStatements.append(",\n\t");
