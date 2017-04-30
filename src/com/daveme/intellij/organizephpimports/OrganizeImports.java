@@ -104,7 +104,7 @@ public class OrganizeImports extends AnAction {
         List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
         Document document = PsiDocumentManager.getInstance(project).getDocument(file);
         if (document == null) {
-            LOG.debug("Null");
+            LOG.debug("Null document");
             return;
         }
         LOG.debug("path:"+file.getVirtualFile().getCanonicalPath());
