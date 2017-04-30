@@ -105,6 +105,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
             LOG.debug("starting offset is null");
         }
     }
+
     private List<PhpUseList> splitUseStatements(
         List imports,
         boolean extractClasses,
