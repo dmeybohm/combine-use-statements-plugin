@@ -1,15 +1,20 @@
 package com.daveme.intellij.organizephpimports;
 
+import com.intellij.lang.LanguageImportStatements;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiWhiteSpace;
+import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.util.PsiUtilCore;
 import com.jetbrains.php.codeInsight.PhpCodeInsightUtil;
 import com.jetbrains.php.lang.psi.PhpFile;
 import com.jetbrains.php.lang.psi.elements.PhpNamespace;
@@ -24,7 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizeImports extends AnAction {
-
+    private static String COMMAND_NAME = "Organize PHP Imports";
+    private static final Logger LOG = Logger.getInstance("#com.davemen.organizephpimports.actions.OrganizeImports");
+    
     @Override
     public void update(@NotNull AnActionEvent e) {
         super.update(e);
@@ -34,31 +41,52 @@ public class OrganizeImports extends AnAction {
         e.getPresentation().setEnabled(enabled);
     }
 
+    private static boolean isAvailable(final PsiFile file) {
+        return !LanguageImportStatements.INSTANCE.forFile(file).isEmpty();
+    }
+
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        Object psiFile = e.getData(CommonDataKeys.PSI_FILE);
-        final PhpFile file = (PhpFile)psiFile;
-        final Editor editor = e.getData(CommonDataKeys.EDITOR_EVEN_IF_INACTIVE);
-        if (editor == null || psiFile == null) {
-            VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
-            // todo handle this case
-            return;
-        }
-        new WriteCommandAction.Simple(file.getProject(), file) {
+        final Editor editor = e.getData(CommonDataKeys.EDITOR);
+        final Project project = e.getData(CommonDataKeys.PROJECT);
+        final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+
+        LOG.debug("virtualFiles: "+virtualFiles);
+        PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
+        LOG.debug("files: "+psiFiles);
+        organizeImports(project, editor, psiFiles);
+    }
+
+    private void organizeImports(final Project project, final Editor editor, final PsiFile[] files) {
+        new WriteCommandAction.Simple(project, COMMAND_NAME, files) {
             @Override
             protected void run() throws Throwable {
+                PhpFile file = (PhpFile)files[0];
                 int offset = 0;
-                PsiElement element = file.findElementAt(offset);
+                PsiElement element;
+                LOG.debug("Editor: "+editor);
+                if (editor != null) {
+                    offset = editor.getCaretModel().getOffset();
+                    element = file.findElementAt(offset);
+                } else {
+                    element = file.findElementAt(10);
+                }
                 if (element == null) {
+                    LOG.debug("element null");
                     return;
                 }
                 PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(element);
-                System.out.println("scopeForUseOperator: "+scopeForUseOperator);
                 if (scopeForUseOperator == null) {
+                    LOG.debug("scopeForUseOperator null");
                     return;
                 }
+
+                LOG.debug("scopeForUseOperator: "+scopeForUseOperator);
                 List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
-                Integer startingOffset = removeUseStatements(imports, editor);
+                Document document = PsiDocumentManager.getInstance(project).getDocument(file);
+                LOG.debug("path:"+file.getVirtualFile().getCanonicalPath());
+                LOG.debug("Imports length: "+imports.size());
+                Integer startingOffset = removeUseStatements(imports, document);
                 PsiElement namespaceParent = PsiTreeUtil.findFirstParent(element, PhpNamespace.INSTANCEOF);
                 boolean indentExtraLevel = false;
                 if (namespaceParent != null) {
@@ -75,10 +103,31 @@ public class OrganizeImports extends AnAction {
                     generated = generateUseStatements(classList, useStatements, null, indentExtraLevel, false);
                     generated = generateUseStatements(constList, useStatements, "const", indentExtraLevel, generated);
                     generateUseStatements(functionList, useStatements, "function", indentExtraLevel, generated);
-                    editor.getDocument().insertString(startingOffset, useStatements);
+                    document.insertString(startingOffset, useStatements);
+                } else {
+                    LOG.debug("starting offset is null");
                 }
             }
         }.execute();
+    }
+
+    public static boolean containsAtLeastOneFile(final VirtualFile[] files) {
+        if (files == null) return false;
+        if (files.length < 1) return false;
+        for (VirtualFile virtualFile : files) {
+            if (virtualFile.isDirectory()) return false;
+        }
+        return true;
+    }
+
+    private static PsiFile[] convertToPsiFiles(final VirtualFile[] files,Project project) {
+        final PsiManager manager = PsiManager.getInstance(project);
+        final ArrayList<PsiFile> result = new ArrayList<PsiFile>();
+        for (VirtualFile virtualFile : files) {
+            final PsiFile psiFile = manager.findFile(virtualFile);
+            if (psiFile instanceof PhpFile) result.add(psiFile);
+        }
+        return PsiUtilCore.toPsiFileArray(result);
     }
 
     private List<PhpUseList> splitUseStatements(List imports, boolean extractClasses, boolean extractConst, boolean extractFunctions) {
@@ -87,9 +136,11 @@ public class OrganizeImports extends AnAction {
             PhpUseList useList = (PhpUseList) useListObject;
             if (extractConst && useList.isOfConst()) {
                 result.add(useList);
-            } else if (extractFunctions && useList.isOfFunction()) {
+            }
+            else if (extractFunctions && useList.isOfFunction()) {
                 result.add(useList);
-            } else if (extractClasses && (!useList.isOfFunction() && !useList.isOfConst())) {
+            }
+            else if (extractClasses && (!useList.isOfFunction() && !useList.isOfConst())) {
                 result.add(useList);
             }
         }
@@ -97,7 +148,7 @@ public class OrganizeImports extends AnAction {
     }
 
     @Nullable
-    private Integer removeUseStatements(List imports, Editor editor) {
+    private Integer removeUseStatements(List imports, Document document) {
         int modifyOffset = 0;
         Integer startingOffset = null;
         for (Object useListObject : imports) {
@@ -108,13 +159,14 @@ public class OrganizeImports extends AnAction {
             }
             // get the newline character after this use statement if there is one:
             PsiElement subsequentElement = useList.getNextSibling();
-            modifyOffset = removeRange(modifyOffset, textRange, editor);
+            modifyOffset = removeRange(modifyOffset, textRange, document);
             if (subsequentElement instanceof PsiWhiteSpace) {
                 PsiElement nextElement = subsequentElement.getNextSibling();
                 if (nextElement instanceof PhpUseList) {
-                    modifyOffset = removeRange(modifyOffset, subsequentElement.getTextRange(), editor);
-                } else {
-                    modifyOffset = removeUpToNextNewLine(modifyOffset, subsequentElement.getTextRange(), editor);
+                    modifyOffset = removeRange(modifyOffset, subsequentElement.getTextRange(), document);
+                }
+                else {
+                    modifyOffset = removeUpToNextNewLine(modifyOffset, subsequentElement.getTextRange(), document);
                 }
             }
         }
@@ -167,16 +219,16 @@ public class OrganizeImports extends AnAction {
         return true;
     }
 
-    private int removeRange(int modifyOffset, TextRange textRange, Editor editor) {
-        editor.getDocument().deleteString(textRange.getStartOffset() - modifyOffset,
+    private int removeRange(int modifyOffset, TextRange textRange, Document document) {
+        document.deleteString(textRange.getStartOffset() - modifyOffset,
                     textRange.getEndOffset() - modifyOffset);
         return modifyOffset + textRange.getEndOffset() - textRange.getStartOffset();
     }
 
-    private int removeUpToNextNewLine(int modifyOffset, TextRange textRange, Editor editor) {
+    private int removeUpToNextNewLine(int modifyOffset, TextRange textRange, Document document) {
         TextRange modifiedRange = new TextRange(textRange.getStartOffset() - modifyOffset,
                 textRange.getEndOffset() - modifyOffset);
-        String text = editor.getDocument().getText(modifiedRange);
+        String text = document.getText(modifiedRange);
         char[] chars = text.toCharArray();
         int textLength = 0;
         for (char aChar : chars) {
@@ -186,7 +238,7 @@ public class OrganizeImports extends AnAction {
             }
         }
         TextRange newRange = new TextRange(textRange.getStartOffset(), textRange.getStartOffset() + textLength);
-        return removeRange(modifyOffset, newRange, editor);
+        return removeRange(modifyOffset, newRange, document);
     }
 
 }
