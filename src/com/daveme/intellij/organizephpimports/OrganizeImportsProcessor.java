@@ -106,10 +106,10 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
         }
     }
     private List<PhpUseList> splitUseStatements(
-            List imports,
-            boolean extractClasses,
-            boolean extractConst,
-            boolean extractFunctions
+        List imports,
+        boolean extractClasses,
+        boolean extractConst,
+        boolean extractFunctions
     ) {
         ArrayList<PhpUseList> result = new ArrayList<PhpUseList>();
         for (Object useListObject : imports) {
