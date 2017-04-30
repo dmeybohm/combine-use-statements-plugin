@@ -36,7 +36,7 @@
     <actions>
         <!-- Add your actions here -->
         <action id="OrganizePHPImports.OrganizeImports"
-                class="com.daveme.intellij.organizephpimports.OrganizeImports"
+                class="com.daveme.intellij.organizephpimports.OrganizeImportsAction"
                 text="Organize Imports..."
                 description="Organize Imports">
             <add-to-group group-id="CodeFormatGroup" anchor="after" relative-to-action="OptimizeImports"/>
