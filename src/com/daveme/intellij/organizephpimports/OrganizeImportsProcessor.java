@@ -80,14 +80,15 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
         }
         LOG.debug("path:"+file.getVirtualFile().getCanonicalPath());
         LOG.debug("Imports length: "+imports.size());
-        Integer offsetUseStatement = removeUseStatements(imports, document);
+
+        Integer offsetOfFirstUseStatement = removeUseStatements(imports, document);
         PsiElement namespaceParent = PsiTreeUtil.findFirstParent(element, PhpNamespace.INSTANCEOF);
         boolean indentExtraLevel = false;
         if (namespaceParent != null) {
             PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
             indentExtraLevel = parent.isBraced();
         }
-        if (offsetUseStatement != null) {
+        if (offsetOfFirstUseStatement != null) {
             List<PhpUseList> classList = splitUseStatements(imports, true, false, false);
             List<PhpUseList> constList = splitUseStatements(imports, false, true, false);
             List<PhpUseList> functionList = splitUseStatements(imports, false, false, true);
@@ -97,7 +98,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
             generated = generateUseStatements(classList, useStatements, null, indentExtraLevel, false);
             generated = generateUseStatements(constList, useStatements, "const", indentExtraLevel, generated);
             generateUseStatements(functionList, useStatements, "function", indentExtraLevel, generated);
-            document.insertString(offsetUseStatement - startingOffset, useStatements);
+            document.insertString(offsetOfFirstUseStatement - startingOffset, useStatements);
             modifyOffset -= useStatements.length();
             startingOffset = modifyOffset;
         }
