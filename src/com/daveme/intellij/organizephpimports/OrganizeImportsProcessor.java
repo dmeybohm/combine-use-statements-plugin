@@ -153,11 +153,11 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
     }
 
     private boolean generateUseStatements(
-            List imports,
-            StringBuilder useStatements,
-            String extra,
-            boolean indentExtraLevel,
-            boolean generated
+        List imports,
+        StringBuilder useStatements,
+        String extra,
+        boolean indentExtraLevel,
+        boolean generated
     ) {
         if (imports.size() == 0) {
             return false;
