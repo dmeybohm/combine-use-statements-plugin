@@ -7,120 +7,144 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilCore;
+import com.intellij.util.containers.MultiMap;
 import com.jetbrains.php.codeInsight.PhpCodeInsightUtil;
 import com.jetbrains.php.lang.psi.PhpFile;
-import com.jetbrains.php.lang.psi.elements.PhpNamespace;
-import com.jetbrains.php.lang.psi.elements.PhpPsiElement;
-import com.jetbrains.php.lang.psi.elements.PhpUse;
-import com.jetbrains.php.lang.psi.elements.PhpUseList;
+import com.jetbrains.php.lang.psi.elements.*;
 import com.jetbrains.php.lang.psi.elements.impl.PhpNamespaceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class OrganizeImports extends AnAction {
     private static String COMMAND_NAME = "Organize PHP Imports";
     private static final Logger LOG = Logger.getInstance("#com.davemen.organizephpimports.actions.OrganizeImports");
-    
+    private int modifyOffset;
+
     @Override
     public void update(@NotNull AnActionEvent e) {
         super.update(e);
-        Object psiFile = e.getData(CommonDataKeys.PSI_FILE);
-        boolean enabled = psiFile instanceof PhpFile;
-        e.getPresentation().setVisible(enabled);
-        e.getPresentation().setEnabled(enabled);
-    }
+        final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+        final Project project = e.getData(CommonDataKeys.PROJECT);
+        final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
 
-    private static boolean isAvailable(final PsiFile file) {
-        return !LanguageImportStatements.INSTANCE.forFile(file).isEmpty();
+        boolean visible = containsAtLeastOnePhpFile(psiFiles);
+        boolean enabled = visible && hasImportStatements(psiFiles, project);
+        e.getPresentation().setVisible(visible);
+        e.getPresentation().setEnabled(enabled);
     }
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        final Editor editor = e.getData(CommonDataKeys.EDITOR);
         final Project project = e.getData(CommonDataKeys.PROJECT);
         final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
 
-        LOG.debug("virtualFiles: "+virtualFiles);
         PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
-        LOG.debug("files: "+psiFiles);
-        organizeImports(project, editor, psiFiles);
+        organizeImports(project, psiFiles);
     }
 
-    private void organizeImports(final Project project, final Editor editor, final PsiFile[] files) {
+    private static boolean hasImportStatements(final PsiFile[] files, final Project project) {
+        // @todo account for multiple projects?
+        for (PsiFile file : files) {
+            if (!LanguageImportStatements.INSTANCE.forFile(file).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void organizeImports(final Project project, final PsiFile[] files) {
         new WriteCommandAction.Simple(project, COMMAND_NAME, files) {
+            // @todo use this instead for thread safety
+            protected int modifyOffset;
+
             @Override
             protected void run() throws Throwable {
-                PhpFile file = (PhpFile)files[0];
-                int offset = 0;
-                PsiElement element;
-                LOG.debug("Editor: "+editor);
-                if (editor != null) {
-                    offset = editor.getCaretModel().getOffset();
-                    element = file.findElementAt(offset);
-                } else {
-                    element = file.findElementAt(10);
-                }
-                if (element == null) {
-                    LOG.debug("element null");
-                    return;
-                }
-                PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(element);
-                if (scopeForUseOperator == null) {
-                    LOG.debug("scopeForUseOperator null");
-                    return;
-                }
+                for (PsiFile psiFile : files) {
+                    PhpFile phpFile = (PhpFile)psiFile;
 
-                LOG.debug("scopeForUseOperator: "+scopeForUseOperator);
-                List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
-                Document document = PsiDocumentManager.getInstance(project).getDocument(file);
-                LOG.debug("path:"+file.getVirtualFile().getCanonicalPath());
-                LOG.debug("Imports length: "+imports.size());
-                Integer startingOffset = removeUseStatements(imports, document);
-                PsiElement namespaceParent = PsiTreeUtil.findFirstParent(element, PhpNamespace.INSTANCEOF);
-                boolean indentExtraLevel = false;
-                if (namespaceParent != null) {
-                    PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
-                    indentExtraLevel = parent.isBraced();
-                }
-                if (startingOffset != null) {
-                    List<PhpUseList> classList = splitUseStatements(imports, true, false, false);
-                    List<PhpUseList> constList = splitUseStatements(imports, false, true, false);
-                    List<PhpUseList> functionList = splitUseStatements(imports, false, false, true);
-
-                    StringBuilder useStatements = new StringBuilder();
-                    boolean generated;
-                    generated = generateUseStatements(classList, useStatements, null, indentExtraLevel, false);
-                    generated = generateUseStatements(constList, useStatements, "const", indentExtraLevel, generated);
-                    generateUseStatements(functionList, useStatements, "function", indentExtraLevel, generated);
-                    document.insertString(startingOffset, useStatements);
-                } else {
-                    LOG.debug("starting offset is null");
+                    MultiMap<String, PhpNamedElement> topLevelDefs = phpFile.getTopLevelDefs();
+                    for (Map.Entry<String, Collection<PhpNamedElement>> entry : topLevelDefs.entrySet()) {
+                        for (PhpNamedElement topLevelDef : entry.getValue()) {
+                            LOG.debug("topLevelDef: "+topLevelDef);
+                            if (topLevelDef instanceof PhpNamespace) {
+                                organizeUseStatementsFromScope(phpFile, topLevelDef, project);
+                            }
+                        }
+                    }
+                    PsiElement topLevelUseScope = phpFile.findElementAt(0);
+                    organizeUseStatementsFromScope(phpFile, topLevelUseScope, project);
                 }
             }
         }.execute();
     }
 
-    public static boolean containsAtLeastOneFile(final VirtualFile[] files) {
-        if (files == null) return false;
-        if (files.length < 1) return false;
-        for (VirtualFile virtualFile : files) {
-            if (virtualFile.isDirectory()) return false;
+    private void organizeUseStatementsFromScope(PhpFile file, PsiElement element, Project project) {
+        if (element == null) {
+            LOG.debug("element null");
+            return;
         }
-        return true;
+        PhpPsiElement scopeForUseOperator = PhpCodeInsightUtil.findScopeForUseOperator(element);
+        if (scopeForUseOperator == null) {
+            LOG.debug("scopeForUseOperator null");
+            return;
+        }
+
+        LOG.debug("scopeForUseOperator: "+scopeForUseOperator);
+        List imports = PhpCodeInsightUtil.collectImports(scopeForUseOperator);
+        Document document = PsiDocumentManager.getInstance(project).getDocument(file);
+        if (document == null) {
+            LOG.debug("Null");
+            return;
+        }
+        LOG.debug("path:"+file.getVirtualFile().getCanonicalPath());
+        LOG.debug("Imports length: "+imports.size());
+        Integer startingOffset = removeUseStatements(imports, document);
+        PsiElement namespaceParent = PsiTreeUtil.findFirstParent(element, PhpNamespace.INSTANCEOF);
+        boolean indentExtraLevel = false;
+        if (namespaceParent != null) {
+            PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
+            indentExtraLevel = parent.isBraced();
+        }
+        if (startingOffset != null) {
+            List<PhpUseList> classList = splitUseStatements(imports, true, false, false);
+            List<PhpUseList> constList = splitUseStatements(imports, false, true, false);
+            List<PhpUseList> functionList = splitUseStatements(imports, false, false, true);
+
+            StringBuilder useStatements = new StringBuilder();
+            boolean generated;
+            generated = generateUseStatements(classList, useStatements, null, indentExtraLevel, false);
+            generated = generateUseStatements(constList, useStatements, "const", indentExtraLevel, generated);
+            generateUseStatements(functionList, useStatements, "function", indentExtraLevel, generated);
+            document.insertString(startingOffset, useStatements);
+        }
+        else {
+            LOG.debug("starting offset is null");
+        }
     }
 
-    private static PsiFile[] convertToPsiFiles(final VirtualFile[] files,Project project) {
+    public static boolean containsAtLeastOnePhpFile(final PsiFile[] files) {
+        if (files == null) return false;
+        if (files.length < 1) return false;
+        for (PsiFile file : files) {
+            if (file.getVirtualFile().isDirectory()) continue;
+            if (!(file instanceof PhpFile)) continue;
+            return true;
+        }
+        return false;
+    }
+
+    private static PsiFile[] convertToPsiFiles(final VirtualFile[] files, Project project) {
         final PsiManager manager = PsiManager.getInstance(project);
         final ArrayList<PsiFile> result = new ArrayList<PsiFile>();
         for (VirtualFile virtualFile : files) {
@@ -149,7 +173,6 @@ public class OrganizeImports extends AnAction {
 
     @Nullable
     private Integer removeUseStatements(List imports, Document document) {
-        int modifyOffset = 0;
         Integer startingOffset = null;
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList)useListObject;
