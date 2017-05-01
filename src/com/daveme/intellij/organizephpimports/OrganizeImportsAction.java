@@ -39,7 +39,6 @@ public class OrganizeImportsAction extends AnAction {
     }
 
     private static boolean hasImportStatements(final PsiFile[] files) {
-        // @todo account for multiple projects?
         for (PsiFile file : files) {
             if (!LanguageImportStatements.INSTANCE.forFile(file).isEmpty()) {
                 return true;
