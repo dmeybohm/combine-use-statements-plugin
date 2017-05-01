@@ -24,7 +24,7 @@ public class OrganizeImportsAction extends AnAction {
         final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
 
         boolean visible = containsAtLeastOnePhpFile(psiFiles);
-        boolean enabled = visible && hasImportStatements(psiFiles, project);
+        boolean enabled = visible && hasImportStatements(psiFiles);
         e.getPresentation().setVisible(visible);
         e.getPresentation().setEnabled(enabled);
     }
@@ -38,7 +38,7 @@ public class OrganizeImportsAction extends AnAction {
         new OrganizeImportsProcessor(project, psiFiles).execute();
     }
 
-    private static boolean hasImportStatements(final PsiFile[] files, final Project project) {
+    private static boolean hasImportStatements(final PsiFile[] files) {
         // @todo account for multiple projects?
         for (PsiFile file : files) {
             if (!LanguageImportStatements.INSTANCE.forFile(file).isEmpty()) {
