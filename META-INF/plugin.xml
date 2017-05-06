@@ -17,6 +17,8 @@
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
   <idea-version since-build="141.1619"/>
     <extensions defaultExtensionNs="com.intellij">
+        <projectService serviceImplementation="com.daveme.intellij.organizephpimports.Settings" />
+
         <projectConfigurable groupId="appearance"
                              displayName="Organize PHP Imports"
                              id="organizephpimports.OrganizeImportsConfig"
