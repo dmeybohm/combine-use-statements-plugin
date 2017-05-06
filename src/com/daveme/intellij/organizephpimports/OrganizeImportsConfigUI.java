@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class OrganizeImportsConfigUI implements SearchableConfigurable {
     private Project project;
@@ -63,7 +65,18 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
     public JComponent createComponent() {
         Settings settings = Settings.getInstance(project);
         loadSettings(settings);
-        modified = true;
+
+        ActionListener modifiedListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modified = true;
+            }
+
+        };
+        addAnExtraBackslashCheckBox.addActionListener(modifiedListener);
+        removeUnusedUseStatementsCheckBox.addActionListener(modifiedListener);
+        sortUseStatementsCheckBox.addActionListener(modifiedListener);
+
         return myPanel;
     }
 
