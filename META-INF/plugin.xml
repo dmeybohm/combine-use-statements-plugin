@@ -22,7 +22,7 @@
         <projectConfigurable groupId="appearance"
                              displayName="Organize PHP Imports"
                              id="organizephpimports.OrganizeImportsConfig"
-                             instance="com.daveme.intellij.organizephpimports.OrganizeImportsConfig" />
+                             instance="com.daveme.intellij.organizephpimports.OrganizeImportsConfigUI" />
      </extensions>
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
