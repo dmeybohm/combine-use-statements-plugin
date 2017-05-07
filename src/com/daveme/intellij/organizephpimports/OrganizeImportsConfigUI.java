@@ -66,13 +66,7 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
         Settings settings = Settings.getInstance(project);
         loadSettings(settings);
 
-        ActionListener modifiedListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                modified = true;
-            }
-
-        };
+        ActionListener modifiedListener = ae -> modified = true;
         addAnExtraBackslashCheckBox.addActionListener(modifiedListener);
         removeUnusedUseStatementsCheckBox.addActionListener(modifiedListener);
         sortUseStatementsCheckBox.addActionListener(modifiedListener);
