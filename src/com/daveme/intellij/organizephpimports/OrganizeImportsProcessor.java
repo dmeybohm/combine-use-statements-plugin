@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
 
-    private static final Logger LOG = Logger.getInstance("#com.davemen.organizephpimports.actions.OrganizeImportsAction");
+    private static final Logger LOG = Logger.getInstance("#com.daveme.organizephpimports.OrganizeImportsProcessor");
     private static final String COMMAND_NAME = "Organize PHP Imports";
 
     private int modifyOffset;
