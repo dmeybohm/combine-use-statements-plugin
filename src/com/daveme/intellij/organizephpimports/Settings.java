@@ -16,9 +16,9 @@ import org.jetbrains.annotations.Nullable;
 )
 public class Settings implements PersistentStateComponent<Settings> {
 
-    public boolean addAnExtraBackslashCheckBox;
-    public boolean removeUnusedUseStatementsCheckBox;
-    public boolean sortUseStatementsCheckBox;
+    public boolean addAnExtraBackslash;
+    public boolean removeUnusedUseStatements;
+    public boolean sortUseStatements;
 
     @Nullable
     @Override

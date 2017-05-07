@@ -29,6 +29,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
 
     private int modifyOffset;
     private int startingOffset;
+    private Settings settings;
 
     private Project project;
     private PsiFile[] files;
@@ -41,6 +42,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
 
     @Override
     protected void run() throws Throwable {
+        settings = Settings.getInstance(project);
         for (PsiFile psiFile : files) {
             PhpFile phpFile = (PhpFile)psiFile;
             modifyOffset = 0;
@@ -113,7 +115,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
         boolean extractConst,
         boolean extractFunctions
     ) {
-        ArrayList<PhpUseList> result = new ArrayList<PhpUseList>();
+        ArrayList<PhpUseList> result = new ArrayList<>();
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList) useListObject;
             if (extractConst && useList.isOfConst()) {
@@ -187,7 +189,11 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
                         useStatements.append("\t");
                     }
                 }
-                useStatements.append(use.getFQN());
+                String fqn = use.getFQN();
+                if (!settings.addAnExtraBackslash) {
+                    fqn = fqn.substring(1);
+                }
+                useStatements.append(fqn);
                 String aliasName = use.getAliasName();
                 if (aliasName != null) {
                     useStatements.append(" as ");

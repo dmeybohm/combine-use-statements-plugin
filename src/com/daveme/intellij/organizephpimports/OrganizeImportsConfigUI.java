@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OrganizeImportsConfigUI implements SearchableConfigurable {
@@ -25,15 +24,15 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
     }
 
     public void loadSettings(Settings settings) {
-        addAnExtraBackslashCheckBox.setSelected(settings.addAnExtraBackslashCheckBox);
-        removeUnusedUseStatementsCheckBox.setSelected(settings.removeUnusedUseStatementsCheckBox);
-        sortUseStatementsCheckBox.setSelected(settings.sortUseStatementsCheckBox);
+        addAnExtraBackslashCheckBox.setSelected(settings.addAnExtraBackslash);
+        removeUnusedUseStatementsCheckBox.setSelected(settings.removeUnusedUseStatements);
+        sortUseStatementsCheckBox.setSelected(settings.sortUseStatements);
     }
 
     public void saveSettings(Settings settings) {
-        settings.addAnExtraBackslashCheckBox = addAnExtraBackslashCheckBox.isSelected();
-        settings.removeUnusedUseStatementsCheckBox = removeUnusedUseStatementsCheckBox.isSelected();
-        settings.sortUseStatementsCheckBox = sortUseStatementsCheckBox.isSelected();
+        settings.addAnExtraBackslash = addAnExtraBackslashCheckBox.isSelected();
+        settings.removeUnusedUseStatements = removeUnusedUseStatementsCheckBox.isSelected();
+        settings.sortUseStatements = sortUseStatementsCheckBox.isSelected();
     }
 
     @NotNull
