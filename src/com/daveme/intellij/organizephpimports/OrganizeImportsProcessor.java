@@ -17,10 +17,7 @@ import com.jetbrains.php.lang.psi.elements.*;
 import com.jetbrains.php.lang.psi.elements.impl.PhpNamespaceImpl;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
 
@@ -128,6 +125,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
                 result.add(useList);
             }
         }
+
         return result;
     }
 
@@ -163,6 +161,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
         boolean indentExtraLevel,
         boolean generated
     ) {
+        ArrayList<PhpUse> uses = new ArrayList<>();
         if (imports.size() == 0) {
             return false;
         }
@@ -175,32 +174,36 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
             useStatements.append(" ");
         }
 
-        int totalUses = 0;
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList)useListObject;
             PhpUse[] declarations = useList.getDeclarations();
             if (declarations == null) {
                 continue;
             }
-            for (PhpUse use : declarations) {
-                if (totalUses > 0) {
-                    useStatements.append(",\n\t");
-                    if (indentExtraLevel) {
-                        useStatements.append("\t");
-                    }
+            Collections.addAll(uses, declarations);
+        }
+        if (settings.sortUseStatements) {
+            Collections.sort(uses, (useOne, useTwo) -> useOne.getFQN().compareTo(useTwo.getFQN()));
+        }
+        int totalUses = 0;
+        for (PhpUse use : uses) {
+            if (totalUses > 0) {
+                useStatements.append(",\n\t");
+                if (indentExtraLevel) {
+                    useStatements.append("\t");
                 }
-                String fqn = use.getFQN();
-                if (!settings.addAnExtraBackslash) {
-                    fqn = fqn.substring(1);
-                }
-                useStatements.append(fqn);
-                String aliasName = use.getAliasName();
-                if (aliasName != null) {
-                    useStatements.append(" as ");
-                    useStatements.append(aliasName);
-                }
-                totalUses++;
             }
+            String fqn = use.getFQN();
+            if (!settings.addAnExtraBackslash) {
+                fqn = fqn.substring(1);
+            }
+            useStatements.append(fqn);
+            String aliasName = use.getAliasName();
+            if (aliasName != null) {
+                useStatements.append(" as ");
+                useStatements.append(aliasName);
+            }
+            totalUses++;
         }
         useStatements.append(";\n");
         return true;
