@@ -17,7 +17,7 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="Add an extra backslash before each use statement"/>
+          <text value="&amp;Add an extra backslash before each use statement"/>
         </properties>
       </component>
       <component id="dcc96" class="javax.swing.JCheckBox" binding="sortUseStatementsCheckBox" default-binding="true">
@@ -26,7 +26,7 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="Sort use statements"/>
+          <text value="&amp;Sort use statements"/>
         </properties>
       </component>
     </children>
