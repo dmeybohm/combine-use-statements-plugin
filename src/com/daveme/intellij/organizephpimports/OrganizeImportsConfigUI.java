@@ -16,7 +16,6 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
 
     private JCheckBox addAnExtraBackslashCheckBox;
     private JPanel myPanel;
-    private JCheckBox removeUnusedUseStatementsCheckBox;
     private JCheckBox sortUseStatementsCheckBox;
 
     OrganizeImportsConfigUI(@NotNull Project project) {
@@ -25,13 +24,11 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
 
     public void loadSettings(Settings settings) {
         addAnExtraBackslashCheckBox.setSelected(settings.addAnExtraBackslash);
-        removeUnusedUseStatementsCheckBox.setSelected(settings.removeUnusedUseStatements);
         sortUseStatementsCheckBox.setSelected(settings.sortUseStatements);
     }
 
     public void saveSettings(Settings settings) {
         settings.addAnExtraBackslash = addAnExtraBackslashCheckBox.isSelected();
-        settings.removeUnusedUseStatements = removeUnusedUseStatementsCheckBox.isSelected();
         settings.sortUseStatements = sortUseStatementsCheckBox.isSelected();
     }
 
@@ -67,7 +64,6 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
 
         ActionListener modifiedListener = ae -> modified = true;
         addAnExtraBackslashCheckBox.addActionListener(modifiedListener);
-        removeUnusedUseStatementsCheckBox.addActionListener(modifiedListener);
         sortUseStatementsCheckBox.addActionListener(modifiedListener);
 
         return myPanel;
