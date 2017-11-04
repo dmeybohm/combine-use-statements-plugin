@@ -31,7 +31,7 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
     private Project project;
     private PsiFile[] files;
 
-    public OrganizeImportsProcessor(Project project, PsiFile... files) {
+    OrganizeImportsProcessor(Project project, PsiFile... files) {
         super(project, COMMAND_NAME, files);
         this.project = project;
         this.files = files;
@@ -177,13 +177,10 @@ public class OrganizeImportsProcessor extends WriteCommandAction.Simple {
         for (Object useListObject : imports) {
             PhpUseList useList = (PhpUseList)useListObject;
             PhpUse[] declarations = useList.getDeclarations();
-            if (declarations == null) {
-                continue;
-            }
             Collections.addAll(uses, declarations);
         }
         if (settings.sortUseStatements) {
-            Collections.sort(uses, (useOne, useTwo) -> useOne.getFQN().compareTo(useTwo.getFQN()));
+            uses.sort(Comparator.comparing(PhpNamedElement::getFQN));
         }
         int totalUses = 0;
         for (PhpUse use : uses) {

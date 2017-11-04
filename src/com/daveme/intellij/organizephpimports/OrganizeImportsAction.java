@@ -20,11 +20,14 @@ public class OrganizeImportsAction extends AnAction {
     public void update(@NotNull AnActionEvent e) {
         super.update(e);
         final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
-        final Project project = e.getData(CommonDataKeys.PROJECT);
-        final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
+        boolean visible = false, enabled = false;
 
-        boolean visible = containsAtLeastOnePhpFile(psiFiles);
-        boolean enabled = visible && hasImportStatements(psiFiles);
+        if (virtualFiles != null) {
+            final Project project = e.getData(CommonDataKeys.PROJECT);
+            final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
+            visible = containsAtLeastOnePhpFile(psiFiles);
+            enabled = visible && hasImportStatements(psiFiles);
+        }
         e.getPresentation().setVisible(visible);
         e.getPresentation().setEnabled(enabled);
     }
@@ -60,7 +63,7 @@ public class OrganizeImportsAction extends AnAction {
 
     private static PsiFile[] convertToPsiFiles(final VirtualFile[] files, Project project) {
         final PsiManager manager = PsiManager.getInstance(project);
-        final ArrayList<PsiFile> result = new ArrayList<PsiFile>();
+        final ArrayList<PsiFile> result = new ArrayList<>();
         for (VirtualFile virtualFile : files) {
             final PsiFile psiFile = manager.findFile(virtualFile);
             if (psiFile instanceof PhpFile) result.add(psiFile);
