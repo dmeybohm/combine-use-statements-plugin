@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>com.daveme.intellij.organizephpimports</id>
     <name>Organize PHP Imports</name>
     <version>1.0</version>
@@ -15,7 +15,7 @@
     </change-notes>
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-  <idea-version since-build="141.1619"/>
+  <idea-version since-build="183.5429"/>
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="com.daveme.intellij.organizephpimports.Settings" />
 
