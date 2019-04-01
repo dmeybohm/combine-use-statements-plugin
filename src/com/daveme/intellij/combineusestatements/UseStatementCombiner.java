@@ -40,24 +40,18 @@ class UseStatementCombiner {
 
     void combine(PsiElement element) {
         if (element == null) {
-            LOG.debug("element null");
             return;
         }
         PhpPsiElement scopeForUseOperator = findScopeForUseOperator(element);
         if (scopeForUseOperator == null) {
-            LOG.debug("scopeForUseOperator null");
             return;
         }
 
-        LOG.debug("scopeForUseOperator: "+scopeForUseOperator);
         List<PhpUseList> imports = collectImports(scopeForUseOperator);
         Document document = getDocument(phpFile);
         if (document == null) {
-            LOG.debug("Null document");
             return;
         }
-        LOG.debug("path:"+phpFile.getVirtualFile().getCanonicalPath());
-        LOG.debug("Imports length: "+imports.size());
 
         Integer offsetOfFirstUseStatement = removeUseStatements(imports, document);
         PsiElement namespaceParent = getFirstParent(element);
@@ -105,7 +99,7 @@ class UseStatementCombiner {
             Integer offsetOfFirstUseStatement,
             boolean indentExtraLevel
     ) {
-        UseStatementCollection collection = new UseStatementCollection(imports);
+        UseStatementsByType collection = new UseStatementsByType(imports);
 
         StringBuilder useStatements = new StringBuilder();
         boolean generated = organizeUseStatements(collection.classes, useStatements, null, indentExtraLevel, false);

@@ -36,7 +36,6 @@ public class CombineUseStatementsProcessor extends WriteCommandAction.Simple {
             MultiMap<String, PhpNamedElement> topLevelDefs = phpFile.getTopLevelDefs();
             for (Map.Entry<String, Collection<PhpNamedElement>> entry : topLevelDefs.entrySet()) {
                 for (PhpNamedElement topLevelDef : entry.getValue()) {
-                    LOG.debug("topLevelDef: "+topLevelDef);
                     if (topLevelDef instanceof PhpNamespace) {
                         useStatementOrganizer.combine(topLevelDef);
                     }

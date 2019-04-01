@@ -6,13 +6,13 @@ import com.jetbrains.php.lang.psi.elements.PhpUseList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class UseStatementCollection {
+class UseStatementsByType {
 
     final List<PhpUseList> constants;
     final List<PhpUseList> functions;
     final List<PhpUseList> classes;
 
-    UseStatementCollection(List<PhpUseList> imports) {
+    UseStatementsByType(List<PhpUseList> imports) {
        this.constants = ImmutableList.<PhpUseList>builder()
                 .addAll(imports.stream()
                     .filter(PhpUseList::isOfConst)
