@@ -1,4 +1,4 @@
-package com.daveme.intellij.organizephpimports;
+package com.daveme.intellij.combineusestatements;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
@@ -6,6 +6,7 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.openapi.project.Project;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @State(
@@ -16,9 +17,10 @@ import org.jetbrains.annotations.Nullable;
 )
 public class Settings implements PersistentStateComponent<Settings> {
 
-    public boolean addAnExtraBackslash;
-    public boolean removeUnusedUseStatements;
-    public boolean sortUseStatements;
+    boolean addAnExtraBackslash;
+    boolean removeUnusedUseStatements;
+    boolean sortUseStatements;
+    boolean sortByStatementLength;
 
     @Nullable
     @Override
@@ -27,11 +29,11 @@ public class Settings implements PersistentStateComponent<Settings> {
     }
 
     @Override
-    public void loadState(Settings settings) {
+    public void loadState(@NotNull Settings settings) {
         XmlSerializerUtil.copyBean(settings, this);
     }
 
-    public static Settings getInstance(Project project) {
+    static Settings getInstance(Project project) {
         return ServiceManager.getService(project, Settings.class);
     }
 }

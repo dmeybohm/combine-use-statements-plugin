@@ -1,4 +1,4 @@
-package com.daveme.intellij.organizephpimports;
+package com.daveme.intellij.combineusestatements;
 
 import com.google.common.collect.ImmutableList;
 import com.jetbrains.php.lang.psi.elements.PhpUseList;

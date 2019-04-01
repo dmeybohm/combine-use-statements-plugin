@@ -1,12 +1,11 @@
 <idea-plugin>
-    <id>com.daveme.intellij.organizephpimports</id>
-    <name>Organize PHP Imports</name>
+    <id>com.daveme.intellij.combineusestatements</id>
+    <name>Combine Use Statements</name>
     <version>1.0</version>
     <vendor email="dmeybohm@gmail.com" url="">David Meybohm</vendor>
 
     <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+        Combine multiple use statements into a single use statement.
     ]]>
     </description>
 
@@ -17,12 +16,12 @@
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
   <idea-version since-build="183.5429"/>
     <extensions defaultExtensionNs="com.intellij">
-        <projectService serviceImplementation="com.daveme.intellij.organizephpimports.Settings" />
+        <projectService serviceImplementation="com.daveme.intellij.combineusestatements.Settings" />
 
         <projectConfigurable groupId="appearance"
-                             displayName="Organize PHP Imports"
+                             displayName="Combine Use Statements"
                              id="organizephpimports.OrganizeImportsConfig"
-                             instance="com.daveme.intellij.organizephpimports.OrganizeImportsConfigUI" />
+                             instance="com.daveme.intellij.combineusestatements.CombineUseStatementsConfigUI" />
      </extensions>
 
     <!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
@@ -41,10 +40,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="OrganizePHPImports.OrganizeImports"
-                class="com.daveme.intellij.organizephpimports.OrganizeImportsAction"
-                text="Organize Imports..."
-                description="Organize Imports">
+        <action id="CombineUseStatements.Combine"
+                class="com.daveme.intellij.combineusestatements.CombineUseStatementsAction"
+                text="Combine Use Statements..."
+                description="Combine Use Statements">
             <add-to-group group-id="CodeFormatGroup" anchor="after" relative-to-action="OptimizeImports"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt G"/>
         </action>

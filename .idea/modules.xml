@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/OrganizePHPImports.iml" filepath="$PROJECT_DIR$/OrganizePHPImports.iml" />
+      <module fileurl="file://$PROJECT_DIR$/combine-use-statements.iml" filepath="$PROJECT_DIR$/combine-use-statements.iml" />
     </modules>
   </component>
 </project>

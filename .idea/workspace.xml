@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="514cecca-13e3-41d8-97fa-7a388e3316be" name="Default" comment="Refactor">
-      <change afterPath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementCollection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/php_openapi.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/php_openapi.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="514cecca-13e3-41d8-97fa-7a388e3316be" name="Default" comment="Rename everything to combine-use-statements">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/META-INF/plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crashes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/crashes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCombiner.java" afterDir="false" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -25,35 +29,78 @@
     <session id="1093552327">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="4" />
-          <entry key="java" value="5" />
-          <entry key="xml" value="1" />
+          <entry key="class" value="6" />
+          <entry key="form" value="1" />
+          <entry key="java" value="8" />
+          <entry key="sh" value="1" />
+          <entry key="xml" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="4" />
-          <entry key="JAVA" value="5" />
-          <entry key="XML" value="1" />
+          <entry key="CLASS" value="6" />
+          <entry key="GUI_DESIGNER_FORM" value="1" />
+          <entry key="JAVA" value="8" />
+          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="XML" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="50" />
-          <entry key="java" value="1900" />
+          <entry key="dummy" value="71" />
+          <entry key="java" value="2607" />
           <entry key="txt" value="12" />
+          <entry key="xml" value="223" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1900" />
-          <entry key="PLAIN_TEXT" value="62" />
+          <entry key="JAVA" value="2607" />
+          <entry key="PLAIN_TEXT" value="83" />
+          <entry key="XML" value="223" />
+        </counts>
+      </usages-collector>
+    </session>
+    <session id="-1842558307">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="class" value="1" />
+          <entry key="gitignore" value="1" />
+          <entry key="java" value="1" />
+          <entry key="sh" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="1" />
+          <entry key="JAVA" value="1" />
+          <entry key="PLAIN_TEXT" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="gitignore" value="62" />
+          <entry key="java" value="12" />
+          <entry key="txt" value="48" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="12" />
+          <entry key="PLAIN_TEXT" value="110" />
         </counts>
       </usages-collector>
     </session>
@@ -64,32 +111,67 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/Settings.java">
+        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-              <folding>
-                <element signature="e#1006#1007#0" expanded="true" />
-                <element signature="e#1079#1080#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="60">
+              <caret line="13" column="42" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java">
+        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/Settings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+            <state relative-caret-position="230">
+              <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+              <folding>
+                <element signature="e#933#934#0" expanded="true" />
+                <element signature="e#991#992#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java">
+        <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/components/PersistentStateComponent.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1107">
-              <caret line="167" column="32" selection-start-line="167" selection-start-column="32" selection-end-line="167" selection-end-column="32" />
+            <state relative-caret-position="150">
+              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/command/WriteCommandAction.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3945">
+              <caret line="297" column="33" selection-start-line="297" selection-start-column="33" selection-end-line="297" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.form">
+          <provider selected="true" editor-type-id="ui-designer" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCombiner.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -100,72 +182,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" selection-start-column="12" selection-end-column="12" />
+            <state relative-caret-position="630">
+              <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementCollection.java">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#486#498#0" expanded="true" />
-                <element signature="e#716#728#0" expanded="true" />
-                <element signature="e#948#960#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="30">
+              <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/src.zip!/java/util/stream/Collectors.java">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/src.zip!/java/util/Comparator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-12006">
-              <caret line="103" column="19" selection-start-line="103" selection-start-column="19" selection-end-line="103" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Applications/PhpStorm.app/Contents/lib/guava-25.1-jre.jar!/com/google/common/collect/ImmutableList.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1195">
-              <caret line="320" column="47" selection-start-line="320" selection-start-column="47" selection-end-line="320" selection-end-column="47" />
-              <folding>
-                <element signature="e#10110#10111#0" expanded="true" />
-                <element signature="e#10160#10161#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/psi/PsiFile.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/command/WriteCommandAction.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3637">
-              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar:///Applications/PhpStorm.app/Contents/plugins/php/lib/php.jar!/com/jetbrains/php/codeInsight/PhpCodeInsightUtil.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="574" column="35" selection-start-line="574" selection-start-column="35" selection-end-line="574" selection-end-column="35" />
+            <state relative-caret-position="6465">
+              <caret line="463" column="69" selection-start-line="463" selection-start-column="69" selection-end-line="463" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -202,18 +238,28 @@
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImports.kt" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImports.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfig.java" />
-        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/Settings.java" />
-        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.form" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsAction.java" />
-        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/SplitUseStatementOptions.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/SplitUseStatementSplitter.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementGenerator.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementSplitter.java" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementCollection.java" />
-        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java" />
-        <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
         <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.form" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/Settings.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/OrganizeImportsAction.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsAction.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/OrganizeImportsProcessor.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsProcessor.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementOrganizer.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCombiner.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/OrganizeImportsConfigUI.java" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.java" />
+        <option value="$PROJECT_DIR$/META-INF/plugin.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/Settings.java" />
       </list>
     </option>
   </component>
@@ -271,127 +317,62 @@
     </navigator>
     <panes>
       <pane id="AndroidView" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="462c0819:PsiDirectoryNode" />
               <item name="META-INF" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="OrganizePHPImports" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="OrganizePHPImports" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
-              <item name="out" type="462c0819:PsiDirectoryNode" />
-              <item name="production" type="462c0819:PsiDirectoryNode" />
-              <item name="OrganizePHPImports" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="intellij" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="organizephpimports" type="462c0819:PsiDirectoryNode" />
+              <item name="combineusestatements" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="organize-php-imports" type="462c0819:PsiDirectoryNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="organizephpimports" type="462c0819:PsiDirectoryNode" />
-              <item name="OrganizeImportsConfigUI" type="e9f4de52:FormNode" />
+              <item name="combineusestatements" type="462c0819:PsiDirectoryNode" />
+              <item name="CombineUseStatementsConfigUI" type="e9f4de52:FormNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-25.1-jre.jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-25.1-jre.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-25.1-jre.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-25.1-jre.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="collect" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="platform-api.jar" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="platform-api.jar" type="462c0819:PsiDirectoryNode" />
               <item name="intellij" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="platform-api.jar" type="462c0819:PsiDirectoryNode" />
@@ -399,96 +380,13 @@
               <item name="openapi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
+              <item name="combine-use-statements" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="platform-api.jar" type="462c0819:PsiDirectoryNode" />
               <item name="intellij" type="462c0819:PsiDirectoryNode" />
               <item name="openapi" type="462c0819:PsiDirectoryNode" />
-              <item name="command" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="platform-api.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="intellij" type="462c0819:PsiDirectoryNode" />
-              <item name="psi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; PhpStorm PS-183.5429.47 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-              <item name="stream" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-              <item name="php.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-              <item name="php.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-              <item name="php.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="jetbrains" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-              <item name="php.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="jetbrains" type="462c0819:PsiDirectoryNode" />
-              <item name="php" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="organize-php-imports" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="php-openapi" type="70bed36:NamedLibraryElementNode" />
-              <item name="php.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="com" type="462c0819:PsiDirectoryNode" />
-              <item name="jetbrains" type="462c0819:PsiDirectoryNode" />
-              <item name="php" type="462c0819:PsiDirectoryNode" />
-              <item name="codeInsight" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -514,7 +412,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="155" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="949" />
     <property name="SearchEverywhereHistoryKey" value="getParameterFor&#9;null&#9;null&#10;getFieldR&#9;null&#9;null&#10;lookupField&#9;null&#9;null&#10;hasFiel&#9;null&#9;null&#10;hasField&#9;null&#9;null&#10;hasFieldName&#9;null&#9;null&#10;hasfieldName&#9;null&#9;null&#10;classIsRel&#9;null&#9;null" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554081433685" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1554116300247" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -718,7 +616,7 @@
       </method>
     </configuration>
     <configuration name="PhpStorm Debug" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="OrganizePHPImports" />
+      <module name="combine-use-statements" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <log_file alias="IDEA LOG" path="$USER_HOME$/Library/Caches/IdeaIC15/plugins-sandbox/system/log/idea.log" />
@@ -727,7 +625,7 @@
       </method>
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="OrganizePHPImports" />
+      <module name="combine-use-statements" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
       <option name="PROGRAM_PARAMETERS" />
       <predefined_log_file id="idea.log" enabled="true" />
@@ -964,7 +862,14 @@
       <option name="project" value="LOCAL" />
       <updated>1494796575450</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Refactor">
+      <created>1554081453923</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1554081453924</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TodoView" selected-index="4">
@@ -980,7 +885,7 @@
     <frame x="4" y="23" width="1436" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4641089" visible="true" weight="0.23959827" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4641089" visible="true" weight="0.24318507" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Palette&#9;" order="2" />
       <window_info id="Favorites" order="3" sideWeight="0.5358911" side_tool="true" weight="0.3321727" />
@@ -988,7 +893,7 @@
       <window_info id="Image Layers" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.43314764" weight="0.3279703" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.43314764" weight="0.32738853" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39975247" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -1020,7 +925,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Always append a newline. &#10;&#10;I was fooled by a bad test with multiple namespace declarations in the same file, but that case isn't worth supporting." />
     <MESSAGE value="Indent constant and function use statements when nested with namespace block declaration" />
     <MESSAGE value="Add alias support" />
     <MESSAGE value="Format" />
@@ -1045,26 +949,14 @@
     <MESSAGE value="Add mneumonic keys" />
     <MESSAGE value="Fix null pointer exception" />
     <MESSAGE value="Refactor" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor" />
+    <MESSAGE value="Rename everything to combine-use-statements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rename everything to combine-use-statements" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/copyright/profiles_settings.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/kotlin-reflect.jar!/kotlin/reflect/NoSuchPropertyException.class" />
-    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/kotlin-reflect.jar!/kotlin/reflect/KotlinReflectionInternalError.class" />
-    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/phpstorm.jar!/com/intellij/openapi/fileEditor/impl/FileDocumentManagerImpl.class" />
-    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/openapi.jar!/com/intellij/openapi/fileEditor/FileDocumentManager.class" />
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/phpstorm.jar!/com/intellij/openapi/application/impl/ApplicationImpl.class" />
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/openapi.jar!/com/intellij/openapi/application/Application.class" />
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/openapi.jar!/com/intellij/psi/PsiManager.class" />
@@ -1087,10 +979,6 @@
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/openapi.jar!/com/intellij/openapi/components/StoragePathMacros.class" />
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/openapi.jar!/com/intellij/lang/LanguageImportStatements.class" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/awt/event/ActionListener.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.form">
-      <provider selected="true" editor-type-id="ui-designer" />
-      <provider editor-type-id="text-editor" />
-    </entry>
     <entry file="jar:///Applications/PhpStorm 10.app/Contents/plugins/php/lib/php.jar!/com/jetbrains/php/codeInsight/PhpCodeInsightUtil.class" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/util/Comparator.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/src.zip!/java/util/function/Predicate.java" />
@@ -1099,30 +987,6 @@
     <entry file="jar:///Applications/PhpStorm 2017.2.app/Contents/lib/openapi.jar!/com/intellij/openapi/command/WriteCommandAction.class" />
     <entry file="jar:///Applications/PhpStorm 2017.2.app/Contents/plugins/php/lib/php-openapi.jar!/com/jetbrains/php/lang/psi/elements/PhpNamedElement.class" />
     <entry file="jar:///Applications/PhpStorm 2017.2.app/Contents/plugins/php/lib/php-openapi.jar!/com/jetbrains/php/lang/psi/elements/PhpUseList.class" />
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="46" selection-start-line="2" selection-start-column="46" selection-end-line="2" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsConfigUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="70" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="70" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/command/WriteCommandAction.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3637">
-          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/psi/PsiFile.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1130,18 +994,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementSplitter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" selection-start-line="16" selection-end-line="30" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#221#222#0" expanded="true" />
-            <element signature="e#259#260#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementSplitter.java" />
     <entry file="jar:///Applications/PhpStorm.app/Contents/plugins/php/lib/php.jar!/com/jetbrains/php/codeInsight/PhpCodeInsightUtil.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="237">
@@ -1149,25 +1002,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-          <folding>
-            <element signature="e#1006#1007#0" expanded="true" />
-            <element signature="e#1079#1080#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Applications/PhpStorm.app/Contents/lib/guava-25.1-jre.jar!/com/google/common/collect/ImmutableList.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1195">
           <caret line="320" column="47" selection-start-line="320" selection-start-column="47" selection-end-line="320" selection-end-column="47" />
-          <folding>
-            <element signature="e#10110#10111#0" expanded="true" />
-            <element signature="e#10160#10161#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1178,7 +1016,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementCollection.java">
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCollection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
@@ -1191,27 +1029,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/UseStatementOrganizer.java">
+    <entry file="jar:///Applications/PhpStorm.app/Contents/plugins/php/lib/php-openapi.jar!/com/jetbrains/php/lang/psi/elements/PhpUseList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1107">
-          <caret line="167" column="32" selection-start-line="167" selection-start-column="32" selection-end-line="167" selection-end-column="32" />
+        <state relative-caret-position="90">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        <state relative-caret-position="60">
+          <caret line="13" column="42" selection-start-line="13" selection-start-column="42" selection-end-line="13" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/organizephpimports/OrganizeImportsProcessor.java">
+    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/command/WriteCommandAction.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+        <state relative-caret-position="3945">
+          <caret line="297" column="33" selection-start-line="297" selection-start-column="33" selection-end-line="297" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/UseStatementCombiner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="40" column="16" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_171.jdk/Contents/Home/src.zip!/java/util/Comparator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6465">
+          <caret line="463" column="69" selection-start-line="463" selection-start-column="69" selection-end-line="463" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/install.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/META-INF/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="42" column="48" selection-start-line="42" selection-start-column="48" selection-end-line="42" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="5" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/CombineUseStatementsConfigUI.form">
+      <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="ui-designer" />
+    </entry>
+    <entry file="jar:///Applications/PhpStorm.app/Contents/lib/platform-api.jar!/com/intellij/openapi/components/PersistentStateComponent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/daveme/intellij/combineusestatements/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="30" column="35" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+          <folding>
+            <element signature="e#933#934#0" expanded="true" />
+            <element signature="e#991#992#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

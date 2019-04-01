@@ -1,6 +1,5 @@
-package com.daveme.intellij.organizephpimports;
+package com.daveme.intellij.combineusestatements;
 
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.Nls;
@@ -10,32 +9,35 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class OrganizeImportsConfigUI implements SearchableConfigurable {
+public class CombineUseStatementsConfigUI implements SearchableConfigurable {
     private Project project;
     private boolean modified;
 
     private JCheckBox addAnExtraBackslashCheckBox;
     private JPanel myPanel;
     private JCheckBox sortUseStatementsCheckBox;
+    private JCheckBox sortByStatementLengthCheckBox;
 
-    OrganizeImportsConfigUI(@NotNull Project project) {
+    CombineUseStatementsConfigUI(@NotNull Project project) {
         this.project = project;
     }
 
-    public void loadSettings(Settings settings) {
+    private void loadSettings(Settings settings) {
         addAnExtraBackslashCheckBox.setSelected(settings.addAnExtraBackslash);
         sortUseStatementsCheckBox.setSelected(settings.sortUseStatements);
+        sortByStatementLengthCheckBox.setSelected(settings.sortByStatementLength);
     }
 
-    public void saveSettings(Settings settings) {
+    private void saveSettings(Settings settings) {
         settings.addAnExtraBackslash = addAnExtraBackslashCheckBox.isSelected();
         settings.sortUseStatements = sortUseStatementsCheckBox.isSelected();
+        settings.sortByStatementLength = sortByStatementLengthCheckBox.isSelected();
     }
 
     @NotNull
     @Override
     public String getId() {
-        return "organizephpimports.OrganizeImportsConfigUI";
+        return "combineusestatements.CombineUseStatementsConfigUI";
     }
 
     @Nullable
@@ -75,7 +77,7 @@ public class OrganizeImportsConfigUI implements SearchableConfigurable {
     }
 
     @Override
-    public void apply() throws ConfigurationException {
+    public void apply() {
         Settings settings = Settings.getInstance(project);
         saveSettings(settings);
         modified = false;

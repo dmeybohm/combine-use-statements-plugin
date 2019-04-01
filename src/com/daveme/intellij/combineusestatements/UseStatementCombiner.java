@@ -1,4 +1,4 @@
-package com.daveme.intellij.organizephpimports;
+package com.daveme.intellij.combineusestatements;
 
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
@@ -21,9 +21,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class UseStatementOrganizer {
+class UseStatementCombiner {
 
-    private static final Logger LOG = Logger.getInstance("#com.daveme.organizephpimports.UseStatementOrganizer");
+    private static final Logger LOG = Logger.getInstance("#com.daveme.combineusestatements.UseStatementCombiner");
 
     private Settings settings;
     private PhpFile phpFile;
@@ -32,13 +32,13 @@ class UseStatementOrganizer {
     private int modifyOffset;
     private int startingOffset;
 
-    UseStatementOrganizer(Settings settings, PhpFile phpFile, Project project) {
+    UseStatementCombiner(Settings settings, PhpFile phpFile, Project project) {
         this.settings = settings;
         this.phpFile = phpFile;
         this.project = project;
     }
 
-    void organize(PsiElement element) {
+    void combine(PsiElement element) {
         if (element == null) {
             LOG.debug("element null");
             return;
@@ -61,17 +61,22 @@ class UseStatementOrganizer {
 
         Integer offsetOfFirstUseStatement = removeUseStatements(imports, document);
         PsiElement namespaceParent = getFirstParent(element);
-        boolean indentExtraLevel = false;
-        if (namespaceParent != null) {
-            PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
-            indentExtraLevel = parent.isBraced();
-        }
+        boolean indentExtraLevel = determineIndentLevel(namespaceParent);
         if (offsetOfFirstUseStatement != null) {
             modifyUseStatements(imports, document, offsetOfFirstUseStatement, indentExtraLevel);
         }
         else {
             LOG.debug("starting offset is null");
         }
+    }
+
+    private boolean determineIndentLevel(PsiElement namespaceParent) {
+        boolean indentExtraLevel = false;
+        if (namespaceParent != null) {
+            PhpNamespaceImpl parent = (PhpNamespaceImpl)namespaceParent;
+            indentExtraLevel = parent.isBraced();
+        }
+        return indentExtraLevel;
     }
 
     @Nullable
@@ -123,6 +128,22 @@ class UseStatementOrganizer {
         if (imports.size() == 0) {
             return false;
         }
+        ArrayList<PhpUseList> newImports = new ArrayList<>(imports);
+        if (settings.sortByStatementLength) {
+            newImports.sort(Comparator.comparing(a -> -1 * a.getDeclarations().length));
+        }
+        prepareBeginningOfUse(useStatements, extra, indentExtraLevel, generated);
+
+        collectUseStatements(newImports, uses);
+        if (settings.sortUseStatements) {
+            uses.sort(Comparator.comparing(PhpNamedElement::getFQN));
+        }
+        generateUses(useStatements, indentExtraLevel, uses);
+        useStatements.append(";\n");
+        return true;
+    }
+
+    private void prepareBeginningOfUse(StringBuilder useStatements, String extra, boolean indentExtraLevel, boolean generated) {
         if (generated && indentExtraLevel) {
             useStatements.append("\t");
         }
@@ -131,14 +152,6 @@ class UseStatementOrganizer {
             useStatements.append(extra);
             useStatements.append(" ");
         }
-
-        collectUseStatements(imports, uses);
-        if (settings.sortUseStatements) {
-            uses.sort(Comparator.comparing(PhpNamedElement::getFQN));
-        }
-        generateUses(useStatements, indentExtraLevel, uses);
-        useStatements.append(";\n");
-        return true;
     }
 
     private void generateUses(StringBuilder useStatements, boolean indentExtraLevel, ArrayList<PhpUse> uses) {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.daveme.intellij.organizephpimports.OrganizeImportsConfigUI">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.daveme.intellij.combineusestatements.CombineUseStatementsConfigUI">
   <grid id="27dc6" binding="myPanel" layout-manager="FormLayout">
     <rowspec value="center:d:noGrow"/>
+    <rowspec value="top:3dlu:noGrow"/>
+    <rowspec value="center:max(d;4px):noGrow"/>
     <rowspec value="top:3dlu:noGrow"/>
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:grow"/>
@@ -26,7 +28,16 @@
           <forms/>
         </constraints>
         <properties>
-          <text value="&amp;Sort use statements"/>
+          <text value="&amp;Sort use statements alphabetically"/>
+        </properties>
+      </component>
+      <component id="d4981" class="javax.swing.JCheckBox" binding="sortByStatementLengthCheckBox" default-binding="true">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <forms/>
+        </constraints>
+        <properties>
+          <text value="Sort by statement &amp;length before combining"/>
         </properties>
       </component>
     </children>

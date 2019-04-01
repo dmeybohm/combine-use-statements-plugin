@@ -1,7 +1,7 @@
 update failed for AnAction with ID=OrganizePHPImports.OrganizeImports
 java.lang.NullPointerException
-	at com.daveme.intellij.organizephpimports.OrganizeImportsAction.convertToPsiFiles(OrganizeImportsAction.java:64)
-	at com.daveme.intellij.organizephpimports.OrganizeImportsAction.update(OrganizeImportsAction.java:24)
+	at com.daveme.intellij.combineusestatements.CombineUseStatementsAction.convertToPsiFiles(OrganizeImportsAction.java:64)
+	at com.daveme.intellij.combineusestatements.CombineUseStatementsAction.update(OrganizeImportsAction.java:24)
 	at com.intellij.openapi.actionSystem.ex.ActionUtil.performDumbAwareUpdate(ActionUtil.java:132)
 	at com.intellij.openapi.actionSystem.impl.Utils.a(Utils.java:235)
 	at com.intellij.openapi.actionSystem.impl.Utils.expandActionGroup(Utils.java:180)

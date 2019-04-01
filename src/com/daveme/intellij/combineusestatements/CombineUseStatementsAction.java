@@ -1,4 +1,4 @@
-package com.daveme.intellij.organizephpimports;
+package com.daveme.intellij.combineusestatements;
 
 import com.intellij.lang.LanguageImportStatements;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class OrganizeImportsAction extends AnAction {
+public class CombineUseStatementsAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {
@@ -38,7 +38,7 @@ public class OrganizeImportsAction extends AnAction {
         final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
         final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
 
-        new OrganizeImportsProcessor(project, psiFiles).execute();
+        new CombineUseStatementsProcessor(project, psiFiles).execute();
     }
 
     private static boolean hasImportStatements(final PsiFile[] files) {
