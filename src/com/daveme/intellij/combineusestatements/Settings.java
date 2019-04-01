@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 @State(
-        name = "OrganizePHPImportsSettings",
+        name = "CombineUseStatementsSettings",
         storages = {
-                @Storage(file = "OrganizePHPImports.xml")
+                @Storage(file = "CombineUseStatements.xml")
         }
 )
 public class Settings implements PersistentStateComponent<Settings> {
