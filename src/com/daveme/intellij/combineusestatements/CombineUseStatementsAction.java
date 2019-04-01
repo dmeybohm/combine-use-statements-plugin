@@ -36,6 +36,9 @@ public class CombineUseStatementsAction extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         final Project project = e.getData(CommonDataKeys.PROJECT);
         final VirtualFile[] virtualFiles = e.getData(CommonDataKeys.VIRTUAL_FILE_ARRAY);
+        if (virtualFiles == null) {
+            return;
+        }
         final PsiFile[] psiFiles = convertToPsiFiles(virtualFiles, project);
 
         new CombineUseStatementsProcessor(project, psiFiles).execute();
