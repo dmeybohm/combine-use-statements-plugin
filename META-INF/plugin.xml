@@ -18,7 +18,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="com.daveme.intellij.combineusestatements.Settings" />
 
-        <projectConfigurable groupId="appearance"
+        <projectConfigurable parentId="reference.webide.settings.project.settings.php"
                              displayName="Combine Use Statements"
                              id="organizephpimports.OrganizeImportsConfig"
                              instance="com.daveme.intellij.combineusestatements.CombineUseStatementsConfigUI" />
