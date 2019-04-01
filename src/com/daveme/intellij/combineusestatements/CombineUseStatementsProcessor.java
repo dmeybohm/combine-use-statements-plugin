@@ -32,17 +32,17 @@ public class CombineUseStatementsProcessor extends WriteCommandAction.Simple {
         for (PsiFile psiFile : files) {
             PhpFile phpFile = (PhpFile)psiFile;
 
-            UseStatementCombiner useStatementOrganizer = new UseStatementCombiner(settings, phpFile, project);
+            UseStatementCombiner useStatementCombiner = new UseStatementCombiner(settings, phpFile, project);
             MultiMap<String, PhpNamedElement> topLevelDefs = phpFile.getTopLevelDefs();
             for (Map.Entry<String, Collection<PhpNamedElement>> entry : topLevelDefs.entrySet()) {
                 for (PhpNamedElement topLevelDef : entry.getValue()) {
                     if (topLevelDef instanceof PhpNamespace) {
-                        useStatementOrganizer.combine(topLevelDef);
+                        useStatementCombiner.combine(topLevelDef);
                     }
                 }
             }
             PsiElement topLevelUseScope = phpFile.findElementAt(0);
-            useStatementOrganizer.combine(topLevelUseScope);
+            useStatementCombiner.combine(topLevelUseScope);
         }
     }
 
