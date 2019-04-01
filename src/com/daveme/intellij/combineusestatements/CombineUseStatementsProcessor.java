@@ -14,7 +14,7 @@ import java.util.*;
 public class CombineUseStatementsProcessor extends WriteCommandAction.Simple {
 
     private static final Logger LOG = Logger.getInstance("#com.daveme.combineusestatements.CombineUseStatementsProcessor");
-    private static final String COMMAND_NAME = "Organize PHP Imports";
+    private static final String COMMAND_NAME = "Combine Use Statements";
 
     private Project project;
     private PsiFile[] files;
